@@ -7,6 +7,7 @@ import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
 
 /**
+ * Holds name, IP address and a reference to a EV3 brick.
  * 
  * @author Tomas Trafina - ttrafina.at.gmail.com
  *
@@ -22,6 +23,12 @@ abstract public class GuitarBrick {
 	/** holds leJOS object representing this brick */
 	private final Brick brick;
 	
+	/**
+	 * Save name, search for IP address of a brick with the name and store it, store reference to the brick's object.
+	 * 
+	 * @param name of the brick in leJOS inside the brick.
+	 * @throws Exception when there is no IP address available for the given name
+	 */
 	public GuitarBrick(String name) throws Exception {
 		LOGGER.debug("Object: GuitarBrick created.");
 		this.name = name;
