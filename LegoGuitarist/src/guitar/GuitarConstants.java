@@ -42,4 +42,11 @@ public class GuitarConstants {
 	/** value of LED pattern to make the LED blink orange fast */
 	public static final int LED_ORANGE_FAST_BLINK = 9;
 	
+	
+	// MOTORS VALUES //
+	
+	/** all motors acceleration in deg/s^2 */
+	public static final int MOTOR_ACCELERATION = 900;
+	/** all motors speed in deg/s (should not be larger than voltage times 10) */
+	public static final int MOTOR_SPEED = 740;
 }
