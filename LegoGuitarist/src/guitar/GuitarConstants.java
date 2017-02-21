@@ -49,4 +49,24 @@ public class GuitarConstants {
 	public static final int MOTOR_ACCELERATION = 900;
 	/** all motors speed in deg/s (should not be larger than voltage times 10) */
 	public static final int MOTOR_SPEED = 740;
+	/** how many degrees of rotation is one step of the automata */
+	public static final int MOTOR_ONE_STEP = 360;
+	
+	/** identifier of large motors (side axel) */
+	public static final char MOTOR_ID_LARGE = 'L';
+	/** identifier of medium motors (straight axel) */
+	public static final char MOTOR_ID_MEDIUM = 'M';
+	
+	/** port to which the motor servicing 1st fret is connected */
+	public static final String MOTOR_PORT_FRET1 = "A";
+	/** port to which the motor servicing 2nd fret is connected */
+	public static final String MOTOR_PORT_FRET2 = "B";
+	/** port to which the motor servicing 3rd fret is connected */
+	public static final String MOTOR_PORT_FRET3 = "C";
+	/** port to which the motor servicing strumming movement is connected */
+	public static final String MOTOR_PORT_STRUMMING = "A";
+	/** port to which the motor servicing rhytm selection is connected */
+	public static final String MOTOR_PORT_RHYTM_SELECTOR = "B";
+	/** port to which the motor servicing selection of root string is connected */
+	public static final String MOTOR_PORT_ROOT_SELECTOR = "C";
 }
