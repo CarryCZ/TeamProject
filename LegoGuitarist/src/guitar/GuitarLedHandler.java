@@ -2,7 +2,6 @@ package guitar;
 
 import org.apache.log4j.Logger;
 
-import lejos.hardware.Brick;
 import lejos.hardware.LED;
 
 /**
@@ -20,10 +19,10 @@ public class GuitarLedHandler {
 	/** holds reference to the slave's LED */
 	private final LED slaveLED;
 	
-	public GuitarLedHandler(Brick masterBrick, Brick slaveBrick) {
+	public GuitarLedHandler(GuitarBrick masterBrick, GuitarBrick slaveBrick) {
 		LOGGER.debug("Object: GuitarLedHandler created.");
-		masterLED = masterBrick.getLED();
-		slaveLED = slaveBrick.getLED();
+		masterLED = masterBrick.getBrick().getLED();
+		slaveLED = slaveBrick.getBrick().getLED();
 	}
 	
 	// MASTER'S LED HANDLING //
@@ -36,6 +35,12 @@ public class GuitarLedHandler {
 	public void setPatternToMaster(int pattern) {
 		LOGGER.trace("GuitarLedHandler: Master's LED pattern set to: " + pattern + ".");
 		masterLED.setPattern(pattern);
+	}
+	
+	/** Turns off the master's LED. */
+	public void setOffToMaster() {
+		LOGGER.trace("GuitarLedHandler: Master's LED pattern set to: Off.");
+		masterLED.setPattern(GuitarConstants.LED_OFF);
 	}
 	
 	/** Lit the master's LED green. */
@@ -102,6 +107,12 @@ public class GuitarLedHandler {
 	public void setPatternToSlave(int pattern) {
 		LOGGER.trace("GuitarLedHandler: Slave's LED pattern set to: " + pattern + ".");
 		slaveLED.setPattern(pattern);
+	}
+	
+	/** Turns off the slave's LED. */
+	public void setOffToSlave() {
+		LOGGER.trace("GuitarLedHandler: Slave's LED pattern set to: Off.");
+		slaveLED.setPattern(GuitarConstants.LED_OFF);
 	}
 	
 	/** Lit the slave's LED green. */
