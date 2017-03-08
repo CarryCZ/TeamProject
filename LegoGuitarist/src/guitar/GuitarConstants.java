@@ -49,8 +49,23 @@ public class GuitarConstants {
 	public static final int MOTOR_ACCELERATION = 900;
 	/** all motors speed in deg/s (should not be larger than voltage times 10) */
 	public static final int MOTOR_SPEED = 740;
-	/** how many degrees of rotation is one step of the automata */
-	public static final int MOTOR_ONE_STEP = 360;
+	/** how many degrees of rotation is one step of the motor 1 */
+	public static final int MOTOR_FRET1_STEP = 90;
+	/** how many degrees of rotation is one step of the motor 2 */
+	public static final int MOTOR_FRET2_STEP = 60;
+	/** how many degrees of rotation is one step of the motor 3 */
+	public static final int MOTOR_FRET3_STEP = 60;
+	/** how many degrees of rotation is one step of the motor 5 */
+	public static final int MOTOR_RHYTHM_STEP = 20;
+	/** how many degrees of rotation is one step of the motor 6 */
+	public static final int MOTOR_BASS_STEP = 20;
+	
+	/** how many unique steps can the automaton do */
+	public static final int MOTOR_FRET1_MAX_STEPS = 4;
+	/** how many unique steps can the automaton do */
+	public static final int MOTOR_FRET2_MAX_STEPS = 6;
+	/** how many unique steps can the automaton do */
+	public static final int MOTOR_FRET3_MAX_STEPS = 6;
 	
 	/** identifier of large motors (side axel) */
 	public static final char MOTOR_ID_LARGE = 'L';
@@ -66,7 +81,7 @@ public class GuitarConstants {
 	/** port to which the motor servicing strumming movement is connected */
 	public static final String MOTOR_PORT_STRUMMING = "A";
 	/** port to which the motor servicing rhytm selection is connected */
-	public static final String MOTOR_PORT_RHYTM_SELECTOR = "B";
+	public static final String MOTOR_PORT_RHYTHM = "B";
 	/** port to which the motor servicing selection of root string is connected */
-	public static final String MOTOR_PORT_ROOT_SELECTOR = "C";
+	public static final String MOTOR_PORT_BASS = "C";
 }
