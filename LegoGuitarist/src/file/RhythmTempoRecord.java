@@ -9,7 +9,7 @@ import java.nio.ByteOrder;
  * @author Tomas Trafina - ttrafina.at.gmail.com
  *
  */
-public class RythmTempoRecord extends TimeRecord implements FileRecord {
+public class RhythmTempoRecord extends TimeRecord implements FileRecord {
 	/** identifier of this record, used for record distinguishing in file */
 	public static final byte CHORD_RECORD_ID = (byte) 1;
 	/** size of this record in bytes when serialized */
@@ -20,9 +20,9 @@ public class RythmTempoRecord extends TimeRecord implements FileRecord {
 	/** holds song's tempo in BPM */
 	private int tempo;
 	
-	public RythmTempoRecord() {}
+	public RhythmTempoRecord() {}
 	
-	public RythmTempoRecord(long timeStamp, byte rhythmID, int tempo) {
+	public RhythmTempoRecord(long timeStamp, byte rhythmID, int tempo) {
 		this.timeStamp = timeStamp;
 		this.rhythmID = rhythmID;
 		this.tempo = tempo;
@@ -42,10 +42,13 @@ public class RythmTempoRecord extends TimeRecord implements FileRecord {
 	}
 
 	@Override
-	public void toBuffer(ByteBuffer buffer) {
+	public ByteBuffer toBuffer() {
+		ByteBuffer buffer = ByteBuffer.allocate(PACKET_SIZE);
 		buffer.putLong(timeStamp);
 		buffer.put(rhythmID);
 		buffer.putInt(tempo);
+		buffer.rewind();
+		return buffer;
 	}
 
 	@Override

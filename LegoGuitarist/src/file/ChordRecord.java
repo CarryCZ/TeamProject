@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
- * Holds information about chord and its type (dur/moll).
+ * Holds information about the type of chord along with time stamp.
  * 
  * @author Tomas Trafina - ttrafina.at.gmail.com
  *
@@ -17,24 +17,16 @@ public class ChordRecord extends TimeRecord implements FileRecord {
 	
 	/** holds basic chord information */
 	private Chord chord;
-	/** true ~ this chord is dur ; false ~ this chord is moll */
-	private boolean isDur;
 	
 	public ChordRecord() {}
 	
-	public ChordRecord(long timeStamp, Chord chord, boolean isDur) {
+	public ChordRecord(long timeStamp, Chord chord) {
 		super(timeStamp);
 		this.chord = chord;
-		this.isDur = isDur;
 	}
 	
 	public Chord getChord() {
 		return chord;
-	}
-	
-	/** @return true ~ dur ; false ~ moll */
-	public boolean isDur() {
-		return isDur;
 	}
 
 	@Override
@@ -43,10 +35,12 @@ public class ChordRecord extends TimeRecord implements FileRecord {
 	}
 
 	@Override
-	public void toBuffer(ByteBuffer buffer) {
+	public ByteBuffer toBuffer() {
+		ByteBuffer buffer = ByteBuffer.allocate(PACKET_SIZE);
 		buffer.putLong(timeStamp);
 		buffer.put(chord.getIdentifier());
-		buffer.put((byte) (isDur ? 1 : 0));
+		buffer.rewind();
+		return buffer;
 	}
 
 	@Override
@@ -54,6 +48,5 @@ public class ChordRecord extends TimeRecord implements FileRecord {
 		buffer.order(ByteOrder.BIG_ENDIAN);
 		timeStamp = buffer.getLong();
 		chord = Chord.getChordFromIdentifier(buffer.get());
-		isDur = buffer.get() == (byte) 1;
 	}
 }

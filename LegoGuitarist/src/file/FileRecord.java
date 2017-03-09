@@ -18,7 +18,7 @@ public interface FileRecord {
 	/**
 	 * Serializes the structure of this object and puts the parameters into the buffer.
 	 */
-	public void toBuffer(ByteBuffer buffer);
+	public ByteBuffer toBuffer();
 	
 	/**
 	 * Gets parameters from the buffer, storing them into the current object.

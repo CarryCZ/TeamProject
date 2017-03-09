@@ -30,4 +30,18 @@ public class FileConstants {
 	public static final byte CHORD_ID_A = (byte) 6;
 	/** identifier for chord H */
 	public static final byte CHORD_ID_H = (byte) 7;
+	/** identifier for chord Dm */
+	public static final byte CHORD_ID_Dm = (byte) 8;
+	/** identifier for chord Em */
+	public static final byte CHORD_ID_Em = (byte) 9;
+	/** identifier for chord Am */
+	public static final byte CHORD_ID_Am = (byte) 10;
+	
+	
+	// FILES //
+	
+	/** size of the buffer waiting to be filled before binary writing operation (for {@linkplain ChordRecord}) */
+	public static final int BIN_WRITER_CHORD_BUFFER_LENGTH = 10;
+	/** size of the buffer waiting to be filled before binary writing operation (for {@linkplain RhythmTempoRecord}) */
+	public static final int BIN_WRITER_RT_BUFFER_LENGTH = 10;
 }
