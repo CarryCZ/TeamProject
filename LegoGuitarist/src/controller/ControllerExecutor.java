@@ -1,5 +1,8 @@
 package controller;
 
+import file.BinaryReader;
+import file.ChordRecord;
+
 /**
  * Contains only method {@link #main(String[])} which calls for controller execution.
  * 
@@ -13,7 +16,8 @@ public class ControllerExecutor {
 	 * 
 	 * @param args - input parameters from console execution
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
+		
 		
 	}
 

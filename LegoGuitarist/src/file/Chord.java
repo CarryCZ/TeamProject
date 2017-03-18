@@ -9,16 +9,15 @@ import guitar.GuitarConstants;
  *
  */
 public enum Chord {	
-	//TODO: fill in correct automaton positions for each chord
-	C (FileConstants.CHORD_ID_C, 0, 0, 0),
-	D (FileConstants.CHORD_ID_D, 0, 0, 0),
-	E (FileConstants.CHORD_ID_E, 0, 0, 0),
-	F (FileConstants.CHORD_ID_F, 0, 0, 0),
-	G (FileConstants.CHORD_ID_G, 0, 0, 0),
-	A (FileConstants.CHORD_ID_A, 0, 0, 0),
-	H (FileConstants.CHORD_ID_H, 0, 0, 0),
-	Dm (FileConstants.CHORD_ID_Dm, 0, 0, 0),
-	Am (FileConstants.CHORD_ID_Am, 0, 0, 0);
+	C (FileConstants.CHORD_ID_C, 3, 2, 3),
+	D (FileConstants.CHORD_ID_D, 1, 3, 4),
+	E (FileConstants.CHORD_ID_E, 4, 2, 2),
+	F (FileConstants.CHORD_ID_F, 2, 5, 1),
+	G (FileConstants.CHORD_ID_G, 1, 1, 6),
+	A (FileConstants.CHORD_ID_A, 3, 4, 2),
+	H (FileConstants.CHORD_ID_H, 2, 5, 5),	//H = B
+	Dm (FileConstants.CHORD_ID_Dm, 1, 5, 4),
+	Am (FileConstants.CHORD_ID_Am, 3, 6, 2);
 	
 	/** byte identifier for the chord */
 	private byte identifier;
@@ -72,7 +71,10 @@ public enum Chord {
             return Chord.A;
         case FileConstants.CHORD_ID_H:
             return Chord.H;
-            //TODO: fill in moll chords
+        case FileConstants.CHORD_ID_Am:
+        	return Chord.Am;
+        case FileConstants.CHORD_ID_Dm:
+        	return Chord.Dm;
         default:
             throw new IllegalArgumentException("Chord: No Chord value exists for this identifier: " + identifier);
 		}
