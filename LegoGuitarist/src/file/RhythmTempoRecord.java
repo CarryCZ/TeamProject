@@ -9,11 +9,9 @@ import java.nio.ByteOrder;
  * @author Tomas Trafina - ttrafina.at.gmail.com
  *
  */
-public class RhythmTempoRecord extends TimeRecord implements FileRecord {
-	/** identifier of this record, used for record distinguishing in file */
-	public static final byte CHORD_RECORD_ID = (byte) 1;
+public class RhythmTempoRecord extends TactRecord implements FileRecord {
 	/** size of this record in bytes when serialized */
-	private static final int PACKET_SIZE = TimeRecord.PACKET_SIZE + 5;
+	private static final int PACKET_SIZE = TactRecord.PACKET_SIZE + Integer.BYTES + Byte.BYTES;
 	
 	/** hold identifier for rhythm (see {@link FileConstants}) */
 	private byte rhythmID;
@@ -22,8 +20,8 @@ public class RhythmTempoRecord extends TimeRecord implements FileRecord {
 	
 	public RhythmTempoRecord() {}
 	
-	public RhythmTempoRecord(long timeStamp, byte rhythmID, int tempo) {
-		this.timeStamp = timeStamp;
+	public RhythmTempoRecord(int tact, byte rhythmID, int tempo) {
+		this.tact = tact;
 		this.rhythmID = rhythmID;
 		this.tempo = tempo;
 	}
@@ -44,7 +42,7 @@ public class RhythmTempoRecord extends TimeRecord implements FileRecord {
 	@Override
 	public ByteBuffer toBuffer() {
 		ByteBuffer buffer = ByteBuffer.allocate(PACKET_SIZE);
-		buffer.putLong(timeStamp);
+		buffer.putInt(tact);
 		buffer.put(rhythmID);
 		buffer.putInt(tempo);
 		buffer.rewind();
@@ -54,7 +52,7 @@ public class RhythmTempoRecord extends TimeRecord implements FileRecord {
 	@Override
 	public void fillFromBuffer(ByteBuffer buffer) {
 		buffer.order(ByteOrder.BIG_ENDIAN);
-		timeStamp = buffer.getLong();
+		tact = buffer.getInt();
 		rhythmID = buffer.get();
 		tempo = buffer.getInt();
 	}

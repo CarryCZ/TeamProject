@@ -6,20 +6,20 @@ package file;
  * @author Tomas Trafina - ttrafina.at.gmail.com
  *
  */
-public class TimeRecord {
+public class TactRecord {
 	/** size of this record in bytes when serialized */
-	protected static final int PACKET_SIZE = 8;
+	protected static final int PACKET_SIZE = Integer.BYTES;
 	
 	/** time stamp associated with this record (microseconds) */
-	protected long timeStamp;
+	protected int tact;
 	
-	public TimeRecord() {}
+	public TactRecord() {}
 	
-	public TimeRecord(long timeStamp) {
-		this.timeStamp = timeStamp;
+	public TactRecord(int tact) {
+		this.tact = tact;
 	}
 	
-	public long getTimeStamp() {
-		return timeStamp;
+	public int getTact() {
+		return tact;
 	}
 }
