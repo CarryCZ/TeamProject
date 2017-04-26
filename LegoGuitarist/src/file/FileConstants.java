@@ -44,4 +44,10 @@ public class FileConstants {
 	public static final int BIN_WRITER_CHORD_BUFFER_LENGTH = 10;
 	/** size of the buffer waiting to be filled before binary writing operation (for {@linkplain RhythmTempoRecord}) */
 	public static final int BIN_WRITER_RT_BUFFER_LENGTH = 10;
+	/** the end of the file's name for a file containing chords sequence */
+	public static final String CHORDS_FILE_SUFFIX = "_chords";
+	/** the end of the file's name for a file containing rhythm and tempo information */
+	public static final String RHYTHM_TEMPO_FILE_SUFFIX = "_rhythm_tempo";
+	/** filename of a text file containing a list of available songs (without .txt) */
+	public static final String SONGS_LIST_FILENAME = "songs_list";
 }

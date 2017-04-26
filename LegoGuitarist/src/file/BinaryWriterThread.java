@@ -2,6 +2,7 @@ package file;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -73,6 +74,18 @@ public class BinaryWriterThread extends Thread {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("Thread: BinaryWriterThread interrupted. STOPPING");
+		} finally {
+			buffer.flip();
+			LOGGER.trace("ByteBuffer length: " + buffer.remaining());
+			int remainingBytes = buffer.remaining();
+			buffer.get(outArray, 0, remainingBytes);
+			try {
+				outBin.write(outArray, 0, remainingBytes);
+				outBin.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			buffer.clear();
 		}
 	}
 	

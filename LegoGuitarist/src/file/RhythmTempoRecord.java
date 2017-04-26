@@ -11,7 +11,7 @@ import java.nio.ByteOrder;
  */
 public class RhythmTempoRecord extends TactRecord implements FileRecord {
 	/** size of this record in bytes when serialized */
-	private static final int PACKET_SIZE = TactRecord.PACKET_SIZE + Integer.BYTES + Byte.BYTES;
+	public static final int PACKET_SIZE = TactRecord.PACKET_SIZE + Integer.BYTES + Byte.BYTES;
 	
 	/** hold identifier for rhythm (see {@link FileConstants}) */
 	private byte rhythmID;
@@ -55,6 +55,11 @@ public class RhythmTempoRecord extends TactRecord implements FileRecord {
 		tact = buffer.getInt();
 		rhythmID = buffer.get();
 		tempo = buffer.getInt();
+	}
+	
+	@Override
+	public String toString() {
+		return ("Tact: " + tact + " ; rhythmID: " + rhythmID + " ; tempo: " + tempo);
 	}
 	
 }

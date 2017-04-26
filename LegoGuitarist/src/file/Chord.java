@@ -91,4 +91,30 @@ public enum Chord {
 	public int getFret3() {
 		return fret3;
 	}
+	
+	@Override
+	public String toString() {
+		switch (this) {
+        case C:
+            return "C";
+        case D:
+            return "D";
+        case E:
+            return "E";
+        case F:
+            return "F";
+        case G:
+            return "G";
+        case A:
+            return "A";
+        case H:
+            return "H";
+        case Am:
+        	return "Am";
+        case Dm:
+        	return "Dm";
+        default:
+            throw new IllegalArgumentException("Chord: No Chord value exists for this identifier: " + identifier);
+		}
+	}
 }

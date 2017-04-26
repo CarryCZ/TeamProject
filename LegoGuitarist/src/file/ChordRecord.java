@@ -11,7 +11,7 @@ import java.nio.ByteOrder;
  */
 public class ChordRecord extends TactRecord implements FileRecord {
 	/** size of this record in bytes when serialized */
-	private static final int PACKET_SIZE = TactRecord.PACKET_SIZE + Byte.BYTES;
+	public static final int PACKET_SIZE = TactRecord.PACKET_SIZE + Byte.BYTES;
 	
 	/** holds basic chord information */
 	private Chord chord;
@@ -46,5 +46,10 @@ public class ChordRecord extends TactRecord implements FileRecord {
 		buffer.order(ByteOrder.BIG_ENDIAN);
 		tact = buffer.getInt();
 		chord = Chord.getChordFromIdentifier(buffer.get());
+	}
+	
+	@Override
+	public String toString() {
+		return ("Tact: " + tact + " ; Chord: " + chord.toString());
 	}
 }
