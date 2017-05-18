@@ -52,6 +52,7 @@ public class ControllerMaster {
 			chordRecord = new ChordRecord(); // hraju vic, nez jeden akord
 			chordRecord.fillFromBuffer(binaryReaderForChordRecord.next());
 			chords.add(chordRecord);
+			System.out.println("Doba: " + chordRecord.getTact() + "Akord: " + chordRecord.getChord());
 		}
 		binaryReaderForChordRecord.close();
 	}
@@ -72,6 +73,7 @@ public class ControllerMaster {
 			rhythmTemtpoRecord = new RhythmTempoRecord();
 			rhythmTemtpoRecord.fillFromBuffer(binaryReaderForRhythmTempoRecord.next());
 			rhythmTempo.add(rhythmTemtpoRecord);
+			System.out.println("Doba: " + rhythmTemtpoRecord.getTact() + "Rytmus: " + rhythmTemtpoRecord.getRhythmID() + "Tempo: " + rhythmTemtpoRecord.getTempo());
 		}
 		binaryReaderForRhythmTempoRecord.close();
 	}

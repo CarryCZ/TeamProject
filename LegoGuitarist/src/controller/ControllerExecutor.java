@@ -16,6 +16,6 @@ public class ControllerExecutor {
 	public static void main(String[] args) {
 		
 		ControllerMaster controllerMaster = new ControllerMaster();
-		controllerMaster.StartUp("chordInputBinary","rhythmTempoInputBinary");			
+		controllerMaster.StartUp("test_chords.bin","test_rhythm_tempo.bin");			
 	}
 }
