@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
@@ -100,42 +101,43 @@ public class ControllerMaster {
 			e.printStackTrace();
 		}
 
-		boolean endBarLine = false;
 		int tempo = 0;
+		int globalBeatCount = 1;
+		boolean endBarLine = false;
 		LeftHandMove lastLeftMove = null;
 		RightHandMove lastRightDownMove = null;
 		RightHandMove lastRightUpMove = null;
-		int globalBeatCount = 1;
 		
-		while (!endBarLine) { //konec skladby
-			ArrayList<ChordRhythmTempoRecord> poradiAkciProLevouAPravouRuku = new ArrayList<ChordRhythmTempoRecord>();
-			int LeftTimeStamp = 0;
+		
+		while (!endBarLine) { //end song
+			
+			ArrayList<ChordRhythmTempoRecord> sequenceActionForLeftRightHand = new ArrayList<ChordRhythmTempoRecord>();
+			int leftTimeStamp = 0;
 			boolean endBar = false; 
 			int iterator = 0;
-			RhythmTempoRecord rhythmTempoRecord = null; //objekt, ktery v sobe dokaze nest info o dobe, rytmu a taktu
-			ChordRecord chordRecordPrevious = new ChordRecord(0, null); //objekt,ktery v sobe dokaze nes info o dobe a akordu													
-			ChordRecord chordRecordActual = new ChordRecord(0, null); //objekt,ktery v sobe dokaze nes info o dobe a akordu	
+			RhythmTempoRecord rhythmTempoRecord = null; 
+			ChordRecord chordRecordPrevious = new ChordRecord(0, null);											
+			ChordRecord chordRecordActual = new ChordRecord(0, null);
 			//zde je nutne nastavit nejaky pocatecni akord 
 																		
-			while (!endBar) { //konec taktu
-				rhythmTempoRecord = rhythmTempo.peek(); //kdyby pool, mozna chyba
-				tempo = rhythmTempoRecord.getTempo(); //zisk aktualniho tempa
+			while (!endBar) { //end bar
+				
+				rhythmTempoRecord = rhythmTempo.peek();
+				tempo = rhythmTempoRecord.getTempo();
 
 				if (chordRecordActual != null && (lastLeftMove == null || globalBeatCount == chords.peek().getTact())) {
 					lastLeftMove = new LeftHandMove();
 					chordRecordPrevious = chordRecordActual;
 					chordRecordActual = chords.poll();
-					
-					//ukoncovaci podminka
 					if(chordRecordActual == null) {
 						endBar = true;
 						endBarLine = true;
 					}
-					
 					lastLeftMove.stepsArray = chordRecordPrevious.getChord().stepsRequiredFortransitionTo(chordRecordActual.getChord());
 				}
-				poradiAkciProLevouAPravouRuku.add(new ChordRhythmTempoRecord(LeftTimeStamp, lastLeftMove, null)); 
-				LeftTimeStamp = LeftTimeStamp + (60 / tempo * 1000);
+				
+				sequenceActionForLeftRightHand.add(new ChordRhythmTempoRecord(leftTimeStamp, lastLeftMove, null)); 
+				leftTimeStamp = leftTimeStamp + (60 / tempo * 1000);
 				int beatsCount = GetBeatsCountInBar(rhythmTempoRecord);
 				if (iterator == beatsCount) {
 					endBar = true;
@@ -144,13 +146,13 @@ public class ControllerMaster {
 				globalBeatCount++;
 			}
 			
-			int pocetPohybuPraveRuky = 0;
-			int RightTimeStamp = 0;
+			int numberOfMovesRightHand = 0;
+			int rightTimeStamp = 0;
 
 			if (rhythmTempoRecord.getRhythmID() == (byte) 1) {
-				pocetPohybuPraveRuky = 4;
+				numberOfMovesRightHand = 4;
 			} else if (rhythmTempoRecord.getRhythmID() == (byte) 2) {
-				pocetPohybuPraveRuky = 3;
+				numberOfMovesRightHand = 3;
 			}
 			int beatsCount = GetBeatsCountInBar(rhythmTempoRecord);
 
@@ -166,20 +168,20 @@ public class ControllerMaster {
 				rhythmTempo.poll();
 			}
 
-			for (int i = 0; i < pocetPohybuPraveRuky; i++) {
-				int moveDelta = beatsCount * ((60 / tempo) * 1000) / (pocetPohybuPraveRuky * 2);
-				poradiAkciProLevouAPravouRuku.add(new ChordRhythmTempoRecord(RightTimeStamp, null, lastRightDownMove));
-				RightTimeStamp = RightTimeStamp + moveDelta;
-				poradiAkciProLevouAPravouRuku.add(new ChordRhythmTempoRecord(RightTimeStamp, null, lastRightUpMove));
-				RightTimeStamp = RightTimeStamp + moveDelta;
+			for (int i = 0; i < numberOfMovesRightHand; i++) {
+				int moveDelta = beatsCount * ((60 / tempo) * 1000) / (numberOfMovesRightHand * 2);
+				sequenceActionForLeftRightHand.add(new ChordRhythmTempoRecord(rightTimeStamp, null, lastRightDownMove));
+				rightTimeStamp = rightTimeStamp + moveDelta;
+				sequenceActionForLeftRightHand.add(new ChordRhythmTempoRecord(rightTimeStamp, null, lastRightUpMove));
+				rightTimeStamp = rightTimeStamp + moveDelta;
 			}
 
-			Collections.sort(poradiAkciProLevouAPravouRuku);
+			Collections.sort(sequenceActionForLeftRightHand);
 
 			int timeStampPrevious = 0;
 			int timeWait = 0;
 			
-			for (ChordRhythmTempoRecord chordRhythmTempoRecord : poradiAkciProLevouAPravouRuku) {
+			for (ChordRhythmTempoRecord chordRhythmTempoRecord : sequenceActionForLeftRightHand) {
 				timeWait = chordRhythmTempoRecord.timeStamp - timeStampPrevious;
 				timeStampPrevious = chordRhythmTempoRecord.timeStamp;
 				
@@ -187,7 +189,7 @@ public class ControllerMaster {
 					try {
 						wait(timeWait);
 					} catch (Exception e) {
-						// TODO: handle exception
+						//TO DO
 					}
 				}
 
@@ -197,6 +199,7 @@ public class ControllerMaster {
 
 					for (int i = 0; i < stepsArray[0]; i++) {
 						guitarMotorsHandler.makeStepFret(1);
+						System.out.println("ahoj");
 					}
 
 					for (int i = 0; i < stepsArray[1]; i++) {
